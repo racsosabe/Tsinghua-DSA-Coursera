@@ -15,17 +15,12 @@ int w[N];
 int X[N];
 int Y[N];
 
-bool gt(int a, int b) {
-	if (X[a] != X[b]) return X[a] < X[b];
-	return Y[a] < Y[b];
-}
-
 void fix_down(int p, int n) {
 	int head = p;
-	if(2 * p <= n and gt(2 * p, head)) {
+	if(2 * p <= n and X[2 * p] > X[head]) {
 		head = 2 * p;
 	}
-	if(2 * p + 1 <= n and gt(2 * p + 1, head)) {
+	if(2 * p + 1 <= n and X[2 * p + 1] > X[head]) {
 		head = 2 * p + 1;
 	}
 	if(head != p) {
@@ -42,7 +37,7 @@ void heap_sort() {
 	for (int i = n; i > 1; --i) {
 		swap(X[1], X[i]);
 		swap(Y[1], Y[i]);
-		fix_down(1, n - 1);
+		fix_down(1, i - 1);
 	}
 }
 
@@ -74,7 +69,6 @@ long long inversions(int l, int r) {
 }
 
 int main() {
-    int n;
     scanf("%d", &n);
     for (int i = 1; i <= n; ++i) {
         scanf("%d %d", X + i, Y + i);
